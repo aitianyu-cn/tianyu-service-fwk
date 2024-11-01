@@ -8,7 +8,8 @@
         ".": "./dist/lib/index.js"
     },
     "files": [
-        "dist"
+        "dist",
+        "README.md"
     ],
     "keywords": [
         "aitianyu.cn",
@@ -18,9 +19,10 @@
     ],
     "type": "commonjs",
     "scripts": {
-        "build": "npm run before-build && tsc && npm run copy-lib && npm run copy-types && npm run after-build",
-        "copy-lib": "copyfiles -u 1 build/**/*.js dist/lib",
-        "copy-types": "copyfiles -u 1 build/**/*.d.ts dist/types",
+        "build": "npm run before-build && npm run compiler && npm run copy-lib && npm run copy-types && npm run after-build",
+        "compiler": "tsc -p \"./config/tsconfig.build.json\" && tsc-alias -p \"./config/tsconfig.build.json\"",
+        "copy-lib": "copyfiles -u 2 build/src/**/*.js dist/lib",
+        "copy-types": "copyfiles -u 2 build/src/**/*.d.ts dist/types",
         "before-build": "rimraf ./dist ./build",
         "after-build": "rimraf ./build",
         "test": "jest --no-cache --verbose",
